@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+source venv/bin/activate
 cd src/backend
 
 VENV=$(python -c "import site; print(site.getsitepackages()[0])")
