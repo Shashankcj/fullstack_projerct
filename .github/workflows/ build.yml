@@ -48,18 +48,29 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Login to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
+            -u "${{ secrets.DOCKER_USERNAME }}" \
+            --password-stdin
+
       - name: Build Backend
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           chmod +x scripts/build_manage.sh
           ./scripts/build_manage.sh
+
       - name: Build Backend Docker Image
         working-directory: src/backend
         run: |
           docker build \
             -f Dockerfile.backend \
-            -t genesis-backend:${{ github.sha }} .
+            -t shashankcj/web_app:backend_${{ github.sha }} .
+
+      - name: Push Backend
+        run: |
+          docker push shashankcj/web_app:backend_${{ github.sha }}
 
   celery:
     name: Celery Build
@@ -103,15 +114,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Login to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
+            -u "${{ secrets.DOCKER_USERNAME }}" \
+            --password-stdin
+
       - name: Build Celery
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
           chmod +x scripts/build_celery.sh
           ./scripts/build_celery.sh
+
       - name: Build Celery Docker Image
         working-directory: src/backend
         run: |
           docker build \
             -f Dockerfile.celery \
-            -t genesis-celery:${{ github.sha }} .
+            -t shashankcj/web_app:celery_${{ github.sha }} .
+
+      - name: Push Celery
+        run: |
+          docker push shashankcj/web_app:celery_${{ github.sha }}
