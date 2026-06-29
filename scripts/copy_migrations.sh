@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+cd src/backend
 source venv/bin/activate
 echo "Running collectstatic..."
 yes yes | python manage.py collectstatic
@@ -13,8 +14,6 @@ if [ ! -d "$DJANGO_BASE_PATH/contrib/admin/templates" ]; then
     echo "Django admin templates not found!"
     exit 1
 fi
-
-cd src/backend
 
 VENV=$(python -c "import site; print(site.getsitepackages()[0])")
 
