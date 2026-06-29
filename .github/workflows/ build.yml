@@ -41,9 +41,13 @@ jobs:
           source venv/bin/activate
           pip list
       - name: Build Manage
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: ./scripts/build_manage.sh
 
       - name: Build Celery
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: ./scripts/build_celery.sh
 
       - name: Copy Migrations
