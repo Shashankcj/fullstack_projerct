@@ -1,0 +1,28 @@
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+
+RUN apt-get update && apt-get install -y \
+    libpq5 \
+    libsasl2-2 \
+    libssl3 \
+    libpcre2-8-0 \
+    libselinux1 \
+    tzdata \
+    && ln -fs /usr/share/zoneinfo/UTC /etc/localtime \
+    && dpkg-reconfigure -f noninteractive tzdata \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY dist/manage.dist /app/manage.dist
+
+RUN chmod +x /app/manage.dist/genesis_server
+
+EXPOSE 8001
+
+CMD ["/app/manage.dist/genesis_server"]

@@ -1,0 +1,130 @@
+html {
+  font-size: 13px; /* Down from 16px — scales all rem-based Tailwind classes */
+}
+
+/* Hide scrollbars globally where needed */
+.custom-scroll::-webkit-scrollbar {
+  display: none;
+}
+.custom-scroll {
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+/* Production-ready HORIZONTAL scrollbar styles */
+.custom-scrollbar-horizontal {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.8) transparent;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.dark .custom-scrollbar-horizontal {
+  scrollbar-color: rgba(75, 85, 99, 0.8) transparent;
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) - HORIZONTAL */
+.custom-scrollbar-horizontal::-webkit-scrollbar {
+  height: 6px;
+}
+
+.custom-scrollbar-horizontal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar-horizontal::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 3px;
+}
+
+.custom-scrollbar-horizontal::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.8);
+}
+
+.dark .custom-scrollbar-horizontal::-webkit-scrollbar-thumb {
+  background-color: rgba(75, 85, 99, 0.8);
+}
+
+.dark .custom-scrollbar-horizontal::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(75, 85, 99, 1);
+}
+
+/* VERTICAL SCROLLBAR for ChartSettingsCard */
+.custom-scrollbar-vertical {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.8) transparent;
+}
+
+.dark .custom-scrollbar-vertical {
+  scrollbar-color: rgba(75, 85, 99, 0.8) transparent;
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) - VERTICAL */
+.custom-scrollbar-vertical::-webkit-scrollbar {
+  width: 6px;  /* ← VERTICAL scrollbar width */
+}
+
+.custom-scrollbar-vertical::-webkit-scrollbar-track {
+  background: rgba(31, 41, 55, 0.5);  /* gray-800/50 */
+}
+
+.custom-scrollbar-vertical::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.6);
+  border-radius: 3px;
+}
+
+.custom-scrollbar-vertical::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.9);
+}
+
+.dark .custom-scrollbar-vertical::-webkit-scrollbar-track {
+  background: rgba(31, 41, 55, 0.8);  /* darker for dark mode */
+}
+
+.dark .custom-scrollbar-vertical::-webkit-scrollbar-thumb {
+  background-color: rgba(75, 85, 99, 0.8);
+}
+
+.dark .custom-scrollbar-vertical::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(75, 85, 99, 1);
+}
+
+/* Prevent global scrollbar inheritance */
+body, html, main, .main-container {
+  overflow-x: visible !important;
+}
+
+/* Additional styles for chart containers */
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 192px;
+}
+
+/* Ensure proper height inheritance for Recharts */
+.recharts-responsive-container {
+  position: relative !important;
+}
+
+/* Smooth scrolling */
+.custom-scrollbar-horizontal,
+.custom-scrollbar-vertical {
+  scroll-behavior: smooth;
+}
+
+/* Loading animation for charts */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.chart-loading {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+

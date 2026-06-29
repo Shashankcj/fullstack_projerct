@@ -1,0 +1,69 @@
+{
+  "mode": "create",
+  "summary": {
+    "total_rows": 10,
+    "created": 10,
+    "updated": 0,
+    "duplicates_in_csv": 0,
+    "duplicates_in_database": 0,
+    "not_found_in_database": 0,
+    "errors": 0
+  },
+  "created_ips": [
+    {
+      "row": 2,
+      "name": "Server-01",
+      "ip_address": "192.168.1.10"
+    },
+    {
+      "row": 3,
+      "name": "Server-02",
+      "ip_address": "192.168.1.11"
+    },
+    {
+      "row": 4,
+      "name": "Database-Primary",
+      "ip_address": "192.168.1.12"
+    },
+    {
+      "row": 5,
+      "name": "Database-Replica",
+      "ip_address": "192.168.1.13"
+    },
+    {
+      "row": 6,
+      "name": "Web-Frontend",
+      "ip_address": "192.168.1.20"
+    },
+    {
+      "row": 7,
+      "name": "Web-Backend",
+      "ip_address": "192.168.1.21"
+    },
+    {
+      "row": 8,
+      "name": "LoadBalancer",
+      "ip_address": "10.0.0.5"
+    },
+    {
+      "row": 9,
+      "name": "API-Gateway",
+      "ip_address": "10.0.0.10"
+    },
+    {
+      "row": 10,
+      "name": "Praveen",
+      "ip_address": "192.168.10.68"
+    },
+    {
+      "row": 11,
+      "name": "Logging-Server",
+      "ip_address": "172.16.0.3"
+    }
+  ],
+  "updated_ips": [],
+  "not_found_in_database_details": [],
+  "duplicates_in_csv_details": [],
+  "duplicates_in_database_details": [],
+  "error_details": []
+}

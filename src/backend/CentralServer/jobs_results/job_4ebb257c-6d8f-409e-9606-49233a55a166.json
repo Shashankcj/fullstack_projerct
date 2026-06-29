@@ -1,0 +1,99 @@
+{
+  "mode": "update",
+  "summary": {
+    "total_rows": 10,
+    "created": 0,
+    "updated": 10,
+    "duplicates_in_csv": 0,
+    "duplicates_in_database": 0,
+    "not_found_in_database": 0,
+    "errors": 0
+  },
+  "created_ips": [],
+  "updated_ips": [
+    {
+      "row": 2,
+      "ip_address": "192.168.1.10",
+      "old_name": "Server-01",
+      "new_name": "Server-01",
+      "old_priority": "p4",
+      "new_priority": "p1"
+    },
+    {
+      "row": 3,
+      "ip_address": "192.168.1.11",
+      "old_name": "Server-02",
+      "new_name": "Server-02",
+      "old_priority": "p4",
+      "new_priority": "p3"
+    },
+    {
+      "row": 4,
+      "ip_address": "192.168.1.12",
+      "old_name": "Database-Primary",
+      "new_name": "Database-Primary",
+      "old_priority": "p4",
+      "new_priority": "p1"
+    },
+    {
+      "row": 5,
+      "ip_address": "192.168.1.13",
+      "old_name": "Database-Replica",
+      "new_name": "Database-Replica",
+      "old_priority": "p4",
+      "new_priority": "np"
+    },
+    {
+      "row": 6,
+      "ip_address": "192.168.1.20",
+      "old_name": "Web-Frontend",
+      "new_name": "Web-Frontend",
+      "old_priority": "p4",
+      "new_priority": "p2"
+    },
+    {
+      "row": 7,
+      "ip_address": "192.168.1.21",
+      "old_name": "Web-Backend",
+      "new_name": "Web-Backend",
+      "old_priority": "p3",
+      "new_priority": "p3"
+    },
+    {
+      "row": 8,
+      "ip_address": "10.0.0.5",
+      "old_name": "LoadBalancer",
+      "new_name": "LoadBalancer",
+      "old_priority": "p4",
+      "new_priority": "p4"
+    },
+    {
+      "row": 9,
+      "ip_address": "10.0.0.10",
+      "old_name": "API-Gateway",
+      "new_name": "API-Gateway",
+      "old_priority": "np",
+      "new_priority": "np"
+    },
+    {
+      "row": 10,
+      "ip_address": "192.168.10.68",
+      "old_name": "Praveen",
+      "new_name": "Praveen",
+      "old_priority": "p4",
+      "new_priority": "p4"
+    },
+    {
+      "row": 11,
+      "ip_address": "172.16.0.3",
+      "old_name": "Logging-Server",
+      "new_name": "Logging-Server",
+      "old_priority": "np",
+      "new_priority": "np"
+    }
+  ],
+  "not_found_in_database_details": [],
+  "duplicates_in_csv_details": [],
+  "duplicates_in_database_details": [],
+  "error_details": []
+}

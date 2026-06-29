@@ -1,0 +1,69 @@
+{
+  "mode": "create",
+  "summary": {
+    "total_rows": 10,
+    "created": 0,
+    "updated": 0,
+    "duplicates_in_csv": 0,
+    "duplicates_in_database": 10,
+    "not_found_in_database": 0,
+    "errors": 0
+  },
+  "created_ips": [],
+  "updated_ips": [],
+  "not_found_in_database_details": [],
+  "duplicates_in_csv_details": [],
+  "duplicates_in_database_details": [
+    {
+      "row": 2,
+      "ip": "192.168.1.10",
+      "name": "Server-01"
+    },
+    {
+      "row": 3,
+      "ip": "192.168.1.11",
+      "name": "Server-02"
+    },
+    {
+      "row": 4,
+      "ip": "192.168.1.12",
+      "name": "Database-Primary"
+    },
+    {
+      "row": 5,
+      "ip": "192.168.1.13",
+      "name": "Database-Replica"
+    },
+    {
+      "row": 6,
+      "ip": "192.168.1.20",
+      "name": "Web-Frontend"
+    },
+    {
+      "row": 7,
+      "ip": "192.168.1.21",
+      "name": "Web-Backend"
+    },
+    {
+      "row": 8,
+      "ip": "10.0.0.5",
+      "name": "LoadBalancer"
+    },
+    {
+      "row": 9,
+      "ip": "10.0.0.10",
+      "name": "API-Gateway"
+    },
+    {
+      "row": 10,
+      "ip": "192.168.10.68",
+      "name": "Praveen"
+    },
+    {
+      "row": 11,
+      "ip": "172.16.0.3",
+      "name": "Logging-Server"
+    }
+  ],
+  "error_details": []
+}

@@ -1,0 +1,25 @@
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+RUN apt-get update && apt-get install -y \
+    libpq5 \
+    libsasl2-2 \
+    libssl3 \
+    libpcre2-8-0 \
+    libselinux1 \
+    tzdata \
+    && ln -fs /usr/share/zoneinfo/UTC /etc/localtime \
+    && dpkg-reconfigure -f noninteractive tzdata \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY dist/celery_entry.dist /app/celery_entry.dist
+
+RUN chmod +x /app/celery_entry.dist/genesis_server
+
+EXPOSE 5566
+
+CMD ["/app/celery_entry.dist/genesis_server", "-A", "CentralServer", "worker", "-l", "info"]
