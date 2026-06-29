@@ -140,7 +140,7 @@ jobs:
           docker push shashankcj/web_app:celery_${{ github.sha }}
 
   frontend:
-    name: Celery Build
+    name: frontend
     runs-on: ubuntu-24.04
 
     steps:
@@ -165,4 +165,36 @@ jobs:
       - name: Push Celery
         run: |
           docker push shashankcj/web_app:frontend_${{ github.sha }}
-      
+  deploy:
+    needs:
+      - backend
+      - celery
+      - frontend
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+          
+      - name: Deploy
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+            cd /home/admin1/genesis-app
+
+            helm upgrade genesis . \
+              --namespace genesis \
+              --set image.backend=shashankcj/web_app:backend_${{ github.sha }} \
+              --set image.frontend=shashankcj/web_app:frontend_${{ github.sha }} \
+              --set image.celery=shashankcj/web_app:celery_${{ github.sha }}
+
+            kubectl rollout status deployment/backend -n genesis
+            kubectl rollout status deployment/frontend -n genesis
+            kubectl rollout status deployment/celery -n genesis
+          EOF
