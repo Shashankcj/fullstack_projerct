@@ -37,3 +37,11 @@ jobs:
         run: |
           source venv/bin/activate
           pip list
+      - name: Build Manage
+        run: ./scripts/build_manage.sh
+
+      - name: Build Celery
+        run: ./scripts/build_celery.sh
+
+      - name: Copy Migrations
+        run: ./scripts/copy_migrations.sh
