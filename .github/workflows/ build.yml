@@ -10,8 +10,30 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Print Hello
-        run: echo "GitHub Actions is working!"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify Python Version
+        run: |
+          python --version
+          pip --version
+
+      - name: Create Virtual Environment
+        run: |
+          python -m venv venv
+
+      - name: Install Requirements
+        run: |
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install -r src/backend/requirements.txt
+
+      - name: Verify Installed Packages
+        run: |
+          source venv/bin/activate
+          pip list
