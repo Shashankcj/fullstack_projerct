@@ -7,6 +7,73 @@ on:
 
 jobs:
 
+  # backend:
+  #   name: Backend Build
+  #   runs-on: ubuntu-24.04
+
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v4
+
+  #     - name: Setup Python
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.12"
+  #         cache: "pip"
+  #         cache-dependency-path: src/backend/requirements.txt
+
+  #     - name: Cache Nuitka
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: |
+  #           ~/.cache/Nuitka
+  #           ~/.cache/ccache
+  #         key: ${{ runner.os }}-nuitka-${{ hashFiles('src/backend/**/*.py') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-nuitka-
+
+  #     - name: Verify Python
+  #       run: |
+  #         python --version
+  #         pip --version
+
+  #     - name: Create Virtual Environment
+  #       working-directory: src/backend
+  #       run: |
+  #         python -m venv venv
+
+  #     - name: Install Requirements
+  #       working-directory: src/backend
+  #       run: |
+  #         source venv/bin/activate
+  #         python -m pip install --upgrade pip
+  #         pip install -r requirements.txt
+
+  #     - name: Login to Docker Hub
+  #       run: |
+  #         echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
+  #           -u "${{ secrets.DOCKER_USERNAME }}" \
+  #           --password-stdin
+
+  #     - name: Build Backend
+  #       env:
+  #         SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  #       run: |
+  #         chmod +x scripts/build_manage.sh
+  #         ./scripts/build_manage.sh
+
+  #     - name: Build Backend Docker Image
+  #       working-directory: src/backend
+  #       run: |
+  #         docker build \
+  #           -f Dockerfile.backend \
+  #           -t shashankcj/web_app:backend_${{ github.sha }} .
+
+  #     - name: Push Backend
+  #       run: |
+  #         docker push shashankcj/web_app:backend_${{ github.sha }}
+
+
   backend:
     name: Backend Build
     runs-on: ubuntu-24.04
@@ -15,63 +82,89 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: "pip"
-          cache-dependency-path: src/backend/requirements.txt
-
-      - name: Cache Nuitka
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/Nuitka
-            ~/.cache/ccache
-          key: ${{ runner.os }}-nuitka-${{ hashFiles('src/backend/**/*.py') }}
-          restore-keys: |
-            ${{ runner.os }}-nuitka-
-
-      - name: Verify Python
-        run: |
-          python --version
-          pip --version
-
-      - name: Create Virtual Environment
-        working-directory: src/backend
-        run: |
-          python -m venv venv
-
-      - name: Install Requirements
-        working-directory: src/backend
-        run: |
-          source venv/bin/activate
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
       - name: Login to Docker Hub
         run: |
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
             -u "${{ secrets.DOCKER_USERNAME }}" \
             --password-stdin
 
-      - name: Build Backend
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        run: |
-          chmod +x scripts/build_manage.sh
-          ./scripts/build_manage.sh
-
-      - name: Build Backend Docker Image
+      - name: Build Backend Image
         working-directory: src/backend
         run: |
           docker build \
             -f Dockerfile.backend \
             -t shashankcj/web_app:backend_${{ github.sha }} .
 
-      - name: Push Backend
+      - name: Push Backend Image
         run: |
           docker push shashankcj/web_app:backend_${{ github.sha }}
+
+  # celery:
+  #   name: Celery Build
+  #   runs-on: ubuntu-24.04
+
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v4
+
+  #     - name: Setup Python
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.12"
+  #         cache: "pip"
+  #         cache-dependency-path: src/backend/requirements.txt
+
+  #     - name: Cache Nuitka
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: |
+  #           ~/.cache/Nuitka
+  #           ~/.cache/ccache
+  #         key: ${{ runner.os }}-nuitka-${{ hashFiles('src/backend/**/*.py') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-nuitka-
+
+  #     - name: Verify Python
+  #       run: |
+  #         python --version
+  #         pip --version
+
+  #     - name: Create Virtual Environment
+  #       working-directory: src/backend
+  #       run: |
+  #         python -m venv venv
+
+  #     - name: Install Requirements
+  #       working-directory: src/backend
+  #       run: |
+  #         source venv/bin/activate
+  #         python -m pip install --upgrade pip
+  #         pip install -r requirements.txt
+
+  #     - name: Login to Docker Hub
+  #       run: |
+  #         echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
+  #           -u "${{ secrets.DOCKER_USERNAME }}" \
+  #           --password-stdin
+
+  #     - name: Build Celery
+  #       env:
+  #         SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  #       run: |
+  #         chmod +x scripts/build_celery.sh
+  #         ./scripts/build_celery.sh
+
+  #     - name: Build Celery Docker Image
+  #       working-directory: src/backend
+  #       run: |
+  #         docker build \
+  #           -f Dockerfile.celery \
+  #           -t shashankcj/web_app:celery_${{ github.sha }} .
+
+  #     - name: Push Celery
+  #       run: |
+  #         docker push shashankcj/web_app:celery_${{ github.sha }}
+
 
   celery:
     name: Celery Build
@@ -81,61 +174,20 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: "pip"
-          cache-dependency-path: src/backend/requirements.txt
-
-      - name: Cache Nuitka
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/Nuitka
-            ~/.cache/ccache
-          key: ${{ runner.os }}-nuitka-${{ hashFiles('src/backend/**/*.py') }}
-          restore-keys: |
-            ${{ runner.os }}-nuitka-
-
-      - name: Verify Python
-        run: |
-          python --version
-          pip --version
-
-      - name: Create Virtual Environment
-        working-directory: src/backend
-        run: |
-          python -m venv venv
-
-      - name: Install Requirements
-        working-directory: src/backend
-        run: |
-          source venv/bin/activate
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
       - name: Login to Docker Hub
         run: |
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
             -u "${{ secrets.DOCKER_USERNAME }}" \
             --password-stdin
 
-      - name: Build Celery
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        run: |
-          chmod +x scripts/build_celery.sh
-          ./scripts/build_celery.sh
-
-      - name: Build Celery Docker Image
+      - name: Build Celery Image
         working-directory: src/backend
         run: |
           docker build \
             -f Dockerfile.celery \
             -t shashankcj/web_app:celery_${{ github.sha }} .
 
-      - name: Push Celery
+      - name: Push Celery Image
         run: |
           docker push shashankcj/web_app:celery_${{ github.sha }}
 
