@@ -6,6 +6,7 @@ on:
       - main
 
 jobs:
+
   backend:
     name: Backend Build
     runs-on: ubuntu-24.04
@@ -71,6 +72,7 @@ jobs:
       - name: Push Backend
         run: |
           docker push shashankcj/web_app:backend_${{ github.sha }}
+
   celery:
     name: Celery Build
     runs-on: ubuntu-24.04
@@ -199,7 +201,13 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - 
+      - name: Checkout GitOps Repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ secrets.GITOPS_REPO }}
+          token: ${{ secrets.GITOPS_PAT }}
+          path: gitops
+
       - name: Update Image Tags
         run: |
           cd gitops
