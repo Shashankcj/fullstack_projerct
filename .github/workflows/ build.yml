@@ -94,6 +94,14 @@ jobs:
           docker build \
             -f Dockerfile.backend \
             -t shashankcj/web_app:backend_${{ github.sha }} .
+      - name: Run Trivy Scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: shashankcj/web_app:backend_${{ github.sha }}
+          format: table
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: HIGH,CRITICAL
 
       - name: Push Backend Image
         run: |
@@ -187,6 +195,15 @@ jobs:
             -f Dockerfile.celery \
             -t shashankcj/web_app:celery_${{ github.sha }} .
 
+      - name: Run Trivy Scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: shashankcj/web_app:celery_${{ github.sha }}
+          format: table
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: HIGH,CRITICAL
+
       - name: Push Celery Image
         run: |
           docker push shashankcj/web_app:celery_${{ github.sha }}
@@ -214,7 +231,16 @@ jobs:
             -f Dockerfile \
             -t shashankcj/web_app:frontend_${{ github.sha }} .
 
-      - name: Push Celery
+      - name: Run Trivy Scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: shashankcj/web_app:frontend_${{ github.sha }}
+          format: table
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: HIGH,CRITICAL
+
+      - name: Push Frontend Image
         run: |
           docker push shashankcj/web_app:frontend_${{ github.sha }}
   # deploy:
@@ -244,43 +270,45 @@ jobs:
   #           kubectl rollout status deployment/frontend -n genesis
   #           kubectl rollout status deployment/celery -n genesis
   #         EOF
-  # update-gitops:
-  #   name: Update GitOps Repository
-  #   needs:
-  #     - backend
-  #     - frontend
-  #     - celery
 
-  #   runs-on: ubuntu-24.04
+  
+  update-gitops:
+    name: Update GitOps Repository
+    needs:
+      - backend
+      - frontend
+      - celery
 
-  #   steps:
-  #     - name: Checkout GitOps Repository
-  #       uses: actions/checkout@v4
-  #       with:
-  #         repository: ${{ secrets.GITOPS_REPO }}
-  #         token: ${{ secrets.GITOPS_PAT }}
-  #         path: gitops
+    runs-on: ubuntu-24.04
 
-  #     - name: Update Image Tags
-  #       run: |
-  #         cd gitops
+    steps:
+      - name: Checkout GitOps Repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ secrets.GITOPS_REPO }}
+          token: ${{ secrets.GITOPS_PAT }}
+          path: gitops
 
-  #         sed -i "s|backend:.*|backend: shashankcj/web_app:backend_${{ github.sha }}|" values.yaml
-  #         sed -i "s|frontend:.*|frontend: shashankcj/web_app:frontend_${{ github.sha }}|" values.yaml
-  #         sed -i "s|celery:.*|celery: shashankcj/web_app:celery_${{ github.sha }}|" values.yaml
+      - name: Update Image Tags
+        run: |
+          cd gitops
 
-  #     - name: Commit Changes
-  #       run: |
-  #         cd gitops
+          sed -i "s|backend:.*|backend: shashankcj/web_app:backend_${{ github.sha }}|" values.yaml
+          sed -i "s|frontend:.*|frontend: shashankcj/web_app:frontend_${{ github.sha }}|" values.yaml
+          sed -i "s|celery:.*|celery: shashankcj/web_app:celery_${{ github.sha }}|" values.yaml
 
-  #         git config user.name "github-actions"
-  #         git config user.email "github-actions@github.com"
-  #         git add values.yaml
+      - name: Commit Changes
+        run: |
+          cd gitops
 
-  #         git diff --cached --quiet || \
-  #         git commit -m "Update images to ${{ github.sha }}"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add values.yaml
 
-  #     - name: Push Changes
-  #       run: |
-  #         cd gitops
-  #         git push
+          git diff --cached --quiet || \
+          git commit -m "Update images to ${{ github.sha }}"
+
+      - name: Push Changes
+        run: |
+          cd gitops
+          git push
