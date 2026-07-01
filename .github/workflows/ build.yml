@@ -244,43 +244,43 @@ jobs:
   #           kubectl rollout status deployment/frontend -n genesis
   #           kubectl rollout status deployment/celery -n genesis
   #         EOF
-  update-gitops:
-    name: Update GitOps Repository
-    needs:
-      - backend
-      - frontend
-      - celery
+  # update-gitops:
+  #   name: Update GitOps Repository
+  #   needs:
+  #     - backend
+  #     - frontend
+  #     - celery
 
-    runs-on: ubuntu-24.04
+  #   runs-on: ubuntu-24.04
 
-    steps:
-      - name: Checkout GitOps Repository
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ secrets.GITOPS_REPO }}
-          token: ${{ secrets.GITOPS_PAT }}
-          path: gitops
+  #   steps:
+  #     - name: Checkout GitOps Repository
+  #       uses: actions/checkout@v4
+  #       with:
+  #         repository: ${{ secrets.GITOPS_REPO }}
+  #         token: ${{ secrets.GITOPS_PAT }}
+  #         path: gitops
 
-      - name: Update Image Tags
-        run: |
-          cd gitops
+  #     - name: Update Image Tags
+  #       run: |
+  #         cd gitops
 
-          sed -i "s|backend:.*|backend: shashankcj/web_app:backend_${{ github.sha }}|" values.yaml
-          sed -i "s|frontend:.*|frontend: shashankcj/web_app:frontend_${{ github.sha }}|" values.yaml
-          sed -i "s|celery:.*|celery: shashankcj/web_app:celery_${{ github.sha }}|" values.yaml
+  #         sed -i "s|backend:.*|backend: shashankcj/web_app:backend_${{ github.sha }}|" values.yaml
+  #         sed -i "s|frontend:.*|frontend: shashankcj/web_app:frontend_${{ github.sha }}|" values.yaml
+  #         sed -i "s|celery:.*|celery: shashankcj/web_app:celery_${{ github.sha }}|" values.yaml
 
-      - name: Commit Changes
-        run: |
-          cd gitops
+  #     - name: Commit Changes
+  #       run: |
+  #         cd gitops
 
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add values.yaml
+  #         git config user.name "github-actions"
+  #         git config user.email "github-actions@github.com"
+  #         git add values.yaml
 
-          git diff --cached --quiet || \
-          git commit -m "Update images to ${{ github.sha }}"
+  #         git diff --cached --quiet || \
+  #         git commit -m "Update images to ${{ github.sha }}"
 
-      - name: Push Changes
-        run: |
-          cd gitops
-          git push
+  #     - name: Push Changes
+  #       run: |
+  #         cd gitops
+  #         git push
