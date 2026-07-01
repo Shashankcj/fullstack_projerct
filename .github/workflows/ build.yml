@@ -95,7 +95,7 @@ jobs:
             -f Dockerfile.backend \
             -t shashankcj/web_app:backend_${{ github.sha }} .
       - name: Run Trivy Scan
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           image-ref: shashankcj/web_app:backend_${{ github.sha }}
           format: table
@@ -196,7 +196,7 @@ jobs:
             -t shashankcj/web_app:celery_${{ github.sha }} .
 
       - name: Run Trivy Scan
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           image-ref: shashankcj/web_app:celery_${{ github.sha }}
           format: table
@@ -232,7 +232,7 @@ jobs:
             -t shashankcj/web_app:frontend_${{ github.sha }} .
 
       - name: Run Trivy Scan
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.35.0
         with:
           image-ref: shashankcj/web_app:frontend_${{ github.sha }}
           format: table
@@ -271,7 +271,7 @@ jobs:
   #           kubectl rollout status deployment/celery -n genesis
   #         EOF
 
-  
+
   update-gitops:
     name: Update GitOps Repository
     needs:
