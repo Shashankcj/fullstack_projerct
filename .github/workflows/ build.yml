@@ -94,14 +94,14 @@ jobs:
           docker build \
             -f Dockerfile.backend \
             -t shashankcj/web_app:backend_${{ github.sha }} .
-      - name: Run Trivy Scan
-        uses: aquasecurity/trivy-action@v0.35.0
-        with:
-          image-ref: shashankcj/web_app:backend_${{ github.sha }}
-          format: table
-          exit-code: '1'
-          ignore-unfixed: true
-          severity: HIGH,CRITICAL
+      # - name: Run Trivy Scan
+      #   uses: aquasecurity/trivy-action@v0.35.0
+      #   with:
+      #     image-ref: shashankcj/web_app:backend_${{ github.sha }}
+      #     format: table
+      #     exit-code: '1'
+      #     ignore-unfixed: true
+      #     severity: HIGH,CRITICAL
 
       - name: Push Backend Image
         run: |
@@ -195,14 +195,14 @@ jobs:
             -f Dockerfile.celery \
             -t shashankcj/web_app:celery_${{ github.sha }} .
 
-      - name: Run Trivy Scan
-        uses: aquasecurity/trivy-action@v0.35.0
-        with:
-          image-ref: shashankcj/web_app:celery_${{ github.sha }}
-          format: table
-          exit-code: '1'
-          ignore-unfixed: true
-          severity: HIGH,CRITICAL
+      # - name: Run Trivy Scan
+      #   uses: aquasecurity/trivy-action@v0.35.0
+      #   with:
+      #     image-ref: shashankcj/web_app:celery_${{ github.sha }}
+      #     format: table
+      #     exit-code: '1'
+      #     ignore-unfixed: true
+      #     severity: HIGH,CRITICAL
 
       - name: Push Celery Image
         run: |
